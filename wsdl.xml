@@ -1,0 +1,80 @@
+<definitions xmlns:tns="paucasals.com.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="paucasals.com.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="Este servicio ofrece respuesta ante cálculos matemáticos." targetNamespace="paucasals.com.wsdl">
+<!--  definition of datatypes  -->
+<types>
+<schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="paucasals.com.xsd">
+<element name="num1">
+<complexType>
+<all>
+<element name="value" type="float"/>
+</all>
+</complexType>
+</element>
+<element name="num2">
+<complexType>
+<all>
+<element name="value" type="float"/>
+</all>
+</complexType>
+</element>
+<element name="resultado">
+<complexType>
+<all>
+<element name="value" type="float"/>
+</all>
+</complexType>
+</element>
+</schema>
+</types>
+<!--  response messages  -->
+<message name="returns_resultado">
+<part name="resultado" type="xsd:resultado"/>
+</message>
+<!--  request messages  -->
+<message name="sumar">
+<part name="num1" type="xsd:num1"/>
+<part name="num2" type="xsd:num2"/>
+</message>
+<message name="restar">
+<part name="num1" type="xsd:num1"/>
+<part name="num2" type="xsd:num2"/>
+</message>
+<!--  server's services  -->
+<portType name="Calculadora matemática">
+<operation name="sumar">
+<input message="tns:sumar"/>
+<output message="tns:returns_resultado"/>
+</operation>
+<operation name="restar">
+<input message="tns:restar"/>
+<output message="tns:returns_resultado"/>
+</operation>
+</portType>
+<!--  server encoding  -->
+<binding name="Calculadora matemática_webservices" type="tns:Calculadora matemática">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="sumar">
+<soap:operation soapAction="urn:xmethods-delayed-quotes#sumar"/>
+<input>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="restar">
+<soap:operation soapAction="urn:xmethods-delayed-quotes#restar"/>
+<input>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+</binding>
+<!--  access to service provider  -->
+<service name="Juan Pedro">
+<port name="Juan Pedro_0" binding="Calculadora matemática_webservices">
+<soap:address location="http://localhost/soap/conWSDL/calcular.php"/>
+</port>
+</service>
+</definitions>
